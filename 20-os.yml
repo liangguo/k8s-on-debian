@@ -1,0 +1,11 @@
+- hosts: all
+  tasks:
+   - name: disable swap
+     shell: swapoff -a
+
+   - name: Copy hosts file
+     copy:
+       src: /z/home/liang/java/k8s-on-debian/etchosts
+       dest: /etc/fstab
+       force: yes
+

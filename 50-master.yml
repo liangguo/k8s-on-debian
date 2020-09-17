@@ -1,0 +1,33 @@
+- hosts: master
+  tasks:
+    - name: disable swap
+      shell: swapoff -a 
+
+    - name: initialize the cluster
+      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt 2>&1
+      args:
+        chdir: $HOME
+        creates: cluster_initialized.txt
+
+    - name: create .kube directory
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+
+    - name: copy admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /root/.kube/config
+        remote_src: yes
+
+    - name: copy flannel config
+      copy:
+        src: ./kube-flannel.yml
+        dest: /root/kube-flannel.yml
+
+    - name: install Pod network
+      shell: kubectl apply -f /root/kube-flannel.yml >> pod_network_setup.txt
+      args:
+        chdir: $HOME
+        creates: pod_network_setup.txt

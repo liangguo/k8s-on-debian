@@ -1,0 +1,10 @@
+127.0.0.1       localhost
+192.168.2.61   k8s1
+192.168.2.62   k8s2
+192.168.2.63   k8s3
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
