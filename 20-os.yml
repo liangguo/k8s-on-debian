@@ -1,11 +1,39 @@
 - hosts: all
   tasks:
+   - name: Remove swapfile from /etc/fstab
+     mount:
+       name: "{{ item }}"
+       fstype: swap
+       state: absent
+     with_items:
+       - swap
+       - none
+
    - name: disable swap
      shell: swapoff -a
 
    - name: Copy hosts file
      copy:
        src: /z/home/liang/java/k8s-on-debian/etchosts
-       dest: /etc/fstab
+       dest: /etc/hosts
        force: yes
 
+   - name: Update iptables alternatives
+     alternatives:
+       name: iptables
+       path: /usr/sbin/iptables-legacy
+
+   - name: Update ip6tables alternatives
+     alternatives:
+       name: ip6tables
+       path: /usr/sbin/ip6tables-legacy
+
+   - name: Update arptables alternatives
+     alternatives:
+       name: arptables
+       path: /usr/sbin/arptables-legacy
+
+   - name: Update ebtables alternatives
+     alternatives:
+       name: ebtables
+       path: /usr/sbin/ebtables-legacy

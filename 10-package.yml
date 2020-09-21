@@ -2,31 +2,31 @@
   tasks:
    - name: install remote apt deps
      apt:
-       name: "{{ item }}"
+       name: ['apt-transport-https', 'ca-certificates', 'gnupg2', 'software-properties-common', 'arptables', 'curl']
        state: present
-     with_items:
-       - apt-transport-https
-       - ca-certificates
-       - gnupg2
-       - software-properties-common
 
-   - name: install Docker
+   - name: remove  Docker from Debian repository
      apt:
        name: docker.io
        state: absent
 
-   - name: install k8s node
+   - name: remove k8s node
      apt:
        name: kubernetes-node
        state: absent
        force: yes
 
-   - name: install k8s client
+   - name: remove k8s client
      apt:
        name: kubernetes-client
        state: absent
        update_cache: true
 
+   - name: remove nftables
+     apt:
+       name: nftables
+       state: absent
+       update_cache: true
 
 - hosts: master
   become: yes
