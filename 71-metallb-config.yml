@@ -1,0 +1,9 @@
+- hosts: master
+  tasks:
+    - name: copy metallb config
+      copy:
+        src: ./metallb-config.yml 
+        dest: /tmp/metallb-config.yml
+
+    - name: apply metallb config
+      shell: kubectl apply -f /tmp/metallb-config.yml
