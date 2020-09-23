@@ -2,7 +2,7 @@
   tasks:
    - name: install remote apt deps
      apt:
-       name: ['apt-transport-https', 'ca-certificates', 'gnupg2', 'software-properties-common', 'arptables', 'curl']
+       name: ['apt-transport-https', 'ca-certificates', 'gnupg2', 'software-properties-common', 'arptables', 'curl', 'ebtables']
        state: present
 
    - name: remove  Docker from Debian repository
