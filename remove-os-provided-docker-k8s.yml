@@ -1,0 +1,26 @@
+- hosts: all
+  tasks:
+   - name: remove  Docker from Debian repository
+     apt:
+       name: docker.io
+       state: absent
+
+   - name: remove k8s node
+     apt:
+       name: kubernetes-node
+       state: absent
+       force: yes
+
+   - name: remove k8s client
+     apt:
+       name: kubernetes-client
+       state: absent
+       update_cache: true
+
+- hosts: master
+  become: yes
+  tasks:
+   - name: Remove k8s master package
+     apt:
+       name: kubernetes-master
+       state: absent
