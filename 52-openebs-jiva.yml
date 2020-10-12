@@ -1,0 +1,27 @@
+- hosts: all
+  tasks:
+   - name: Create Directory for jiva
+     file:
+       path: /var/lib/openebs/jiva
+       state: directory
+       mode: 0755
+
+- hosts: master
+  tasks:
+   - name: Copy jiva pool config file
+     copy:
+       src: ./jiva-pool.yml
+       dest: /tmp/jiva-pool.yml
+
+   - name: Create jiva pool 
+     shell: kubectl apply -f /tmp/jiva-pool.yml
+
+   - name: Copy jiva storage class config file
+     copy:
+       src: ./jiva-storage-class.yml
+       dest: /tmp/jiva-storage-class.yml
+
+   - name: Create jiva storage class
+     shell: kubectl apply -f /tmp/jiva-storage-class.yml
+
+

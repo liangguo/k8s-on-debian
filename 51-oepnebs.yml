@@ -1,0 +1,8 @@
+- hosts: master
+  tasks:
+    - name: install openebs operator
+      shell: kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml >>openebs-operator.txt
+      args:
+        chdir: $HOME
+        creates: openebs-operator.txt
+

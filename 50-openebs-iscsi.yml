@@ -1,0 +1,13 @@
+- hosts: all
+  tasks:
+   - name: install iscsi package
+     apt:
+       name: open-iscsi
+       state: present
+
+   - name: start iscsi service
+     systemd:
+       name: iscsid
+       state: started
+       enabled: yes
+
